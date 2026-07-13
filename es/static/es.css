@@ -1,0 +1,26 @@
+* { box-sizing:border-box; }
+body { margin:0; font:15px/1.45 "Segoe UI", -apple-system, Arial, sans-serif; background:#eef2f6; color:#16202c; }
+.hd { display:flex; justify-content:space-between; align-items:center; background:#0f3d5e; color:#fff; padding:12px 24px; flex-wrap:wrap; gap:10px; }
+.hd b { font-size:1.15rem; margin-right:12px; } .hd span { color:#a9c7dd; font-size:.85rem; }
+.hd nav a { color:#fff; margin-left:16px; text-decoration:none; opacity:.85; } .hd nav a:hover { opacity:1; }
+.wrap { display:grid; grid-template-columns:420px 1fr; gap:18px; max-width:1240px; margin:18px auto; padding:0 16px; align-items:start; }
+.wrap.one { grid-template-columns:1fr; }
+.panel { background:#fff; border:1px solid #d7dee7; border-radius:12px; padding:16px 20px; }
+h1 { font-size:1.2rem; margin:0 0 6px; } h2 { font-size:1.15rem; margin:0 0 12px; } h3 { font-size:.95rem; margin:16px 0 6px; color:#0f3d5e; text-transform:uppercase; letter-spacing:.03em; }
+.presets { font-size:.85rem; color:#5b6b7c; margin:0 0 10px; } .presets a { color:#1769aa; }
+fieldset { border:1px solid #e1e7ee; border-radius:10px; margin:0 0 12px; padding:8px 12px 2px; }
+legend { font-weight:600; font-size:.85rem; color:#0f3d5e; padding:0 4px; }
+label { display:grid; grid-template-columns:1fr 150px; align-items:center; gap:10px; margin-bottom:8px; font-size:.9rem; }
+input, select { font:inherit; padding:6px 8px; border:1px solid #c5d0dc; border-radius:7px; width:100%; }
+button { width:100%; background:#1769aa; color:#fff; border:0; border-radius:9px; padding:11px; font:inherit; font-weight:600; cursor:pointer; }
+.err { background:#fde8e6; color:#a5281b; padding:8px 10px; border-radius:8px; }
+.profile { display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-bottom:12px; }
+.profile div { background:#f1f6fb; border-radius:10px; padding:10px 12px; } .profile small { display:block; color:#5b6b7c; } .profile b { font-size:1.05rem; }
+.metrics { width:100%; border-collapse:collapse; } .metrics td { padding:6px 4px; border-bottom:1px solid #edf1f5; } .metrics .v { text-align:right; font-weight:600; white-space:nowrap; }
+.adv { border:1px solid #e1e7ee; border-radius:9px; margin:6px 0; padding:8px 12px; background:#fbfcfe; }
+.adv summary { cursor:pointer; font-weight:500; } .adv[open] summary { margin-bottom:6px; } .adv p { margin:4px 0; font-size:.9rem; }
+.rule { color:#5b6b7c; } code { background:#eef2f6; border-radius:5px; padding:1px 5px; font-size:.85em; }
+.trace { margin-top:14px; font-size:.9rem; } .trace ol { columns:2; }
+pre { background:#0f1b26; color:#d6e2ee; padding:14px; border-radius:10px; overflow:auto; font-size:.8rem; max-height:70vh; }
+.chips code { display:inline-block; margin:2px; }
+@media (max-width:900px) { .wrap { grid-template-columns:1fr; } label { grid-template-columns:1fr; } }

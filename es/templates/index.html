@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Конфигуратор СИЗАР — экспертная система</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='es.css') }}">
+</head>
+<body>
+<header class="hd">
+  <div><b>Конфигуратор СИЗАР</b><span>экспертная система подбора архитектуры записи разговоров · CLIPS 6.4</span></div>
+  <nav><a href="{{ url_for('index') }}">Консультация</a><a href="{{ url_for('kb') }}">База знаний</a></nav>
+</header>
+{% macro sel(name) %}<select name="{{ name }}">{% for v in choices[name] %}<option value="{{ v }}" {% if form[name] == v %}selected{% endif %}>{{ labels[name][v] }}</option>{% endfor %}</select>{% endmacro %}
+<main class="wrap">
+  <form method="post" class="panel form">
+    <h1>Исходные данные заказчика</h1>
+    <p class="presets">Примеры:
+      <a href="?preset=office">офис 40 линий</a> · <a href="?preset=contact">контакт-центр 450 линий</a> · <a href="?preset=bank">банк, 6 филиалов, КИИ</a></p>
+    {% if error %}<p class="err">{{ error }}</p>{% endif %}
+    <fieldset><legend>Нагрузка</legend>
+      <label>Одновременных разговоров в пике<input type="number" name="channels" min="1" value="{{ form.channels }}" required></label>
+      <label>Рабочих мест операторов<input type="number" name="operators" min="0" value="{{ form.operators }}" required></label>
+      <label>Часов разговоров на линию в сутки<input type="number" name="hours" min="1" max="24" value="{{ form.hours }}" required></label>
+      <label>Площадок (филиалов)<input type="number" name="sites" min="1" value="{{ form.sites }}" required></label>
+    </fieldset>
+    <fieldset><legend>Хранение и анализ</legend>
+      <label>Срок хранения аудио, дней<input type="number" name="retention" min="1" value="{{ form.retention }}" required></label>
+      <label>Запись экранов операторов{{ sel('screens') }}</label>
+      <label>Срок хранения видео экранов, дней<input type="number" name="screen_retention" min="1" value="{{ form.screen_retention }}"></label>
+      <label>Речевая аналитика{{ sel('analytics') }}</label>
+    </fieldset>
+    <fieldset><legend>Инфраструктура и требования</legend>
+      <label>Требуемая доступность{{ sel('availability') }}</label>
+      <label>АТС поддерживает SIPREC{{ sel('siprec') }}</label>
+      <label>Значимый объект КИИ{{ sel('kii') }}</label>
+      <label>Требование к ОС{{ sel('os') }}</label>
+    </fieldset>
+    <button>Получить рекомендации</button>
+  </form>
+
+  {% if result %}
+  <section class="panel result">
+    <h2>Заключение экспертной системы</h2>
+    <div class="profile">
+      <div><small>Класс нагрузки</small><b>{{ result.profile.load }}</b></div>
+      <div><small>Профиль развертывания</small><b>{{ result.profile.deployment }}</b></div>
+    </div>
+    <table class="metrics">
+      {% for m in result.metrics %}<tr><td>{{ m.name }}</td><td class="v">{{ m.value|num }} {{ m.unit }}</td></tr>{% endfor %}
+    </table>
+    {% for area, items in result.by_area() %}
+      <h3>{{ area }}</h3>
+      {% for a in items %}
+        <details class="adv"><summary>{{ a.text }}</summary>
+          <p><b>Почему:</b> {{ a.why }}</p><p class="rule">Правило: <code>{{ a.rule }}</code></p></details>
+      {% endfor %}
+    {% endfor %}
+    <details class="trace"><summary>Трассировка вывода ({{ result.fired|length }} правил)</summary>
+      <ol>{% for r in result.fired %}<li><code>{{ r }}</code></li>{% endfor %}</ol></details>
+  </section>
+  {% endif %}
+</main>
+</body>
+</html>

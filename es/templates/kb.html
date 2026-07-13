@@ -1,0 +1,9 @@
+<!doctype html>
+<html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>База знаний — Конфигуратор СИЗАР</title><link rel="stylesheet" href="{{ url_for('static', filename='es.css') }}"></head>
+<body>
+<header class="hd"><div><b>Конфигуратор СИЗАР</b><span>база знаний: {{ rules|length }} правил</span></div>
+<nav><a href="{{ url_for('index') }}">Консультация</a><a href="{{ url_for('kb') }}">База знаний</a></nav></header>
+<main class="wrap one"><section class="panel"><h1>Правила</h1><p class="chips">{% for r in rules %}<code>{{ r }}</code> {% endfor %}</p>
+<h2>Исходный текст (kb/sizar.clp)</h2><pre>{{ source }}</pre></section></main>
+</body></html>
